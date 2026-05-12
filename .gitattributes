@@ -1,0 +1,2 @@
+artifacts/*.keras filter=lfs diff=lfs merge=lfs -text
+artifacts/*.joblib filter=lfs diff=lfs merge=lfs -text
