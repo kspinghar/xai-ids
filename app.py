@@ -17,7 +17,7 @@ import pandas as pd
 import shap
 import lime.lime_tabular
 import xgboost as xgb
-from keras.models import load_model
+from keras.models import load_model, Model
 
 ART = Path(__file__).parent / "artifacts"
 
@@ -28,7 +28,16 @@ pca = joblib.load(ART / "pca.joblib")
 ocsvm = joblib.load(ART / "ocsvm.joblib")
 rf = joblib.load(ART / "rf.joblib")
 le = joblib.load(ART / "label_encoder.joblib")
-encoder = load_model(ART / "encoder.keras", compile=False)
+# Load the full autoencoder (which has all its own weights) and reconstruct the
+# encoder as a view onto its intermediate "encoded" layer. Saving the encoder
+# as a separate sub-model with .save() does not persist shared-layer weights
+# correctly across reload — this avoids that bug entirely.
+_autoencoder = load_model(ART / "autoencoder.keras", compile=False)
+# Encoded output is the third LeakyReLU in the encoder stack:
+#   Input(0) → Dense(1) → BN(2) → LeakyReLU(3) → Dropout(4)
+#           → Dense(5) → BN(6) → LeakyReLU(7) → Dropout(8)
+#           → Dense(9) → BN(10) → LeakyReLU(11) ← encoded
+encoder = Model(_autoencoder.input, _autoencoder.layers[11].output)
 hybrid = xgb.XGBClassifier()
 hybrid.load_model(str(ART / "hybrid.json"))
 
