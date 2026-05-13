@@ -32,4 +32,6 @@ A scaled-down, interactive demonstrator of the hybrid intrusion detection system
 
 ## Training the artefacts
 
-The artefacts shipped with this Space were produced by `train_and_save.py` from the dataset in the linked GitHub repo. Re-running is not required to use the demo.
+The artefacts shipped with this Space were produced by `train_and_save.py` from the CIC-IDS-2017 dataset. Re-running is not required to use the demo.
+
+**Source code:** https://github.com/kspinghar/xai-ids
