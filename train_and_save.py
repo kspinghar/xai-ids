@@ -178,8 +178,8 @@ joblib.dump(ocsvm, ART_DIR / "ocsvm.joblib")
 joblib.dump(rf, ART_DIR / "rf.joblib")
 joblib.dump(le, ART_DIR / "label_encoder.joblib")
 hybrid.save_model(str(ART_DIR / "hybrid.json"))
-autoencoder.save(ART_DIR / "autoencoder.keras")
-encoder.save(ART_DIR / "encoder.keras")
+autoencoder.save(ART_DIR / "autoencoder.h5")
+encoder.save(ART_DIR / "encoder.h5")
 
 with open(ART_DIR / "feature_names.json", "w") as f:
     json.dump(feature_names, f, indent=2)

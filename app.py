@@ -32,7 +32,7 @@ le = joblib.load(ART / "label_encoder.joblib")
 # encoder as a view onto its intermediate "encoded" layer. Saving the encoder
 # as a separate sub-model with .save() does not persist shared-layer weights
 # correctly across reload — this avoids that bug entirely.
-_autoencoder = load_model(ART / "autoencoder.keras", compile=False)
+_autoencoder = load_model(ART / "autoencoder.h5", compile=False)
 # Encoded output is the third LeakyReLU in the encoder stack:
 #   Input(0) → Dense(1) → BN(2) → LeakyReLU(3) → Dropout(4)
 #           → Dense(5) → BN(6) → LeakyReLU(7) → Dropout(8)
